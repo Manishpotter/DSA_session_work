@@ -1,0 +1,28 @@
+class Solution
+{
+    public:
+    //Function to return the level order traversal of a tree.
+    void bfs(Node* root,vector<int> &ans){
+        queue<Node*> q;
+        q.push(root);
+        while(!q.empty()){
+            Node* curr = q.front();
+            q.pop();
+            ans.push_back(curr->data);
+            if(curr->left!=NULL) 
+                q.push(curr->left);
+            if(curr->right!=NULL)
+                q.push(curr->right);
+            
+        }
+    }
+    vector<int> levelOrder(Node* node)
+    {
+      //Your code here
+      
+      vector<int> ans;
+      if(node==NULL) return ans;
+      bfs(node,ans);
+      return ans;
+    }
+};
