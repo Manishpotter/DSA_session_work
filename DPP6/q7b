@@ -1,0 +1,23 @@
+
+
+/* Tree node structure  used in the program
+ struct Node
+ {
+     int data;
+     Node* left;
+     Node* right;
+}; */
+
+/* Computes the number of nodes in a tree. */
+int height(Node* root){
+    if(root==NULL) return 0;
+    int lh = height(root->left);
+    int rh = height(root->right);
+    int res = lh+rh+1;
+    return res;
+}
+int getSize(Node* node)
+{
+   // Your code here
+   return height(node);
+}
