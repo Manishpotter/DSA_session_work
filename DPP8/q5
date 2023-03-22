@@ -1,0 +1,32 @@
+class Solution
+{
+	public:
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    // code here
+	    vector<int> fre(V);
+	    for(int i=0;i<V;i++){
+	        for(auto j : adj[i]){
+	            fre[j]++;
+	        }
+	    }
+	    queue<int> q;
+	    for(int i=0 ; i<V ; i++){
+	        if(fre[i]==0){
+	            q.push(i);
+	        }
+	    }
+	    vector<int> ans;
+	    while(!q.empty()){
+	        int curr = q.front();
+	        ans.push_back(curr);
+	        q.pop();
+	        for(auto i : adj[curr]){
+	            fre[i]--;
+	            if(fre[i]==0) q.push(i);
+	        }
+	    }
+	    return ans;
+	}
+};
