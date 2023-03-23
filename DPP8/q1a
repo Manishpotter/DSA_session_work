@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    void dfs(int vertex,vector<int> g[],vector<int>&vis){
+        vis[vertex]=true;
+        for(auto &child : g[vertex]){
+            if(!vis[child])
+                dfs(child,g,vis);
+        }
+    }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int> g[V];
+        for(int i=0 ; i<V ; i++){
+            for(int j=0 ; j<V ; j++){
+                if(adj[i][j]==1 && i!=j){
+                    g[i].push_back(j);
+                    g[j].push_back(i);
+                }
+            }
+        }
+        vector<int>vis(V);
+        int ct=0;
+        for(int i=0 ; i<V ; i++){
+            if(!vis[i]){
+                dfs(i,g,vis);
+                ct++;
+            }
+        }
+        return ct;
+    }
+};
