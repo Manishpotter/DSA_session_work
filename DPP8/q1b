@@ -1,0 +1,98 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ld long double
+#define all(x) x.begin(),x.end()
+#define rall(x) x.rbegin(),x.rend()
+const int N=1e5+10;
+const int M=1e9+7;
+vector<int> g[N];
+int par[N];
+void dfs(ll vertex , ll p=-1){
+    par[vertex]=p;
+    for(auto child : g[vertex]){
+        if(child==p) continue;
+        dfs(child,vertex);
+    }
+}
+vector<ll> path(ll v){
+    vector<ll> ans;
+    while(v!=-1){
+        ans.push_back(v);
+        v=par[v];
+    }
+    return ans;
+}
+ll stringTointeger(string str)
+{
+    ll temp = 0;
+    for (int i = 0; i < str.length(); i++) {
+        temp = temp * 10 + (str[i] - '0');
+    }
+    return temp;
+}
+///////////////////////////////////////////////////////////
+
+void dfs(int vertex,int par,vector<vector<int>> &g,vector<int> &subt_sum,vector<int> &val){
+    subt_sum[vertex]= val[vertex-1];
+    for(auto child : g[vertex]){
+        if(child==par) continue;
+        dfs(child,vertex,g,subt_sum,val);
+        subt_sum[vertex]+=subt_sum[child];
+    }
+}
+void bfs(int src,vector<int>g[],vector<int>&vis){
+        queue<int> q;
+        q.push(src);
+        while(!q.empty()){
+            int cr=q.front();
+            q.pop();
+            vis[cr]=true;
+            for(auto child : g[cr]){
+                if(!vis[child]){
+                    q.push(child);
+                }
+            }
+        }
+}
+void dfs(int vertex,vector<int>&vis,vector<int> g[]){
+    vis[vertex]=true;
+    for(auto child : g[vertex]){
+        if(!vis[child]){
+            dfs(child,vis,g);
+        }
+    }
+}
+void solve() {
+       int v,e;
+       cin>>v>>e;
+       vector<int> g[v+1];
+       for(int i=0 ; i<e ; i++){
+            int x,y; cin>>x>>y;
+            g[x].push_back(y);
+            g[y].push_back(x);
+       } 
+       vector<int> vis(v+1);
+       int ct=0;
+       for(int i=1 ; i<=v ; i++){
+            if(!vis[i]){
+                //dfs(i,vis,g);
+                bfs(i,g,vis);
+                ct++;
+            }
+       }
+       cout<<ct<<endl;
+}
+int main() {
+	 
+	// your code goes here
+	
+    ll t;cin>>t;
+   
+    while(t--){
+     	solve();
+     	
+    }
+
+    return 0;
+}
